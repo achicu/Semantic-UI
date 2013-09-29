@@ -17,15 +17,13 @@
 
 .ui.modal {
   display: none;
-  position: fixed;
+  position: relative;
   z-index: 1001;
 
-  top: 50%;
-  left: 50%;
   text-align: left;
 
-  width: 800px;
-  margin-left: -400px;
+  width: 70%;
+  max-width: 800px;
 
   background-color: #FFFFFF;
   border: 1px solid #DDDDDD;
@@ -156,5 +154,5 @@
 *******************************/
 
 .ui.active.modal {
-  display: block;
+  display: inline-block;
 }
