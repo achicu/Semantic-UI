@@ -45,7 +45,9 @@ $.fn.dropdown = function(parameters) {
 
         $menu         = $dropdown.children(selector.menu),
 
-        isTouchDevice = ('ontouchstart' in document.documentElement),
+        // FIXME: check what we can do for Chromium on Windows8.
+        // https://github.com/jlukic/Semantic-UI/issues/61
+        isTouchDevice = false, // ('ontouchstart' in document.documentElement),
 
         element       = this,
         instance      = $dropdown.data(dropdownNamespace),
@@ -360,14 +362,6 @@ $.fn.dropdown = function(parameters) {
                 $currentMenu
                   .hide()
                   .clearQueue()
-                  .children()
-                    .clearQueue()
-                    .css('opacity', 0)
-                    .delay(50)
-                    .animate({
-                      opacity : 1
-                    }, settings.duration, 'easeOutQuad', dropdown.event.resetStyle)
-                    .end()
                   .slideDown(100, 'easeOutQuad', function() {
                     $.proxy(dropdown.event.resetStyle, this)();
                     callback();
