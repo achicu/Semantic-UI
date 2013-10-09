@@ -7,6 +7,8 @@
 
 ;(function ( $, window, document, undefined ) {
 
+var $visibileDropdown = null;
+
 $.fn.dropdown = function(parameters) {
   var
     $allDropdowns = $(this),
@@ -170,7 +172,7 @@ $.fn.dropdown = function(parameters) {
                   .addClass(className.active)
                 ;
                 dropdown.determine.selectAction(text, value);
-                $.proxy(settings.onChange, element)(value, text);
+                $.proxy(settings.onChange, element)(value, text, $choice, event);
                 event.stopPropagation();
               }
             }
@@ -282,6 +284,7 @@ $.fn.dropdown = function(parameters) {
             $input.val(value);
           },
           active: function() {
+            $visibileDropdown = $dropdown;
             $dropdown.addClass(className.active);
           },
           visible: function() {
@@ -308,6 +311,7 @@ $.fn.dropdown = function(parameters) {
 
         remove: {
           active: function() {
+            $visibileDropdown = null;
             $dropdown.removeClass(className.active);
           },
           visible: function() {
@@ -476,11 +480,11 @@ $.fn.dropdown = function(parameters) {
 
         hideOthers: function() {
           dropdown.verbose('Finding other dropdowns to hide');
-          $allDropdowns
-            .not($dropdown)
+          if ($visibileDropdown) {
+            $visibileDropdown
               .has(selector.menu + ':visible')
-              .dropdown('hide')
-          ;
+              .dropdown('hide');
+          }
         },
 
         toggle: function() {
